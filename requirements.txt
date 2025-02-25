@@ -1,0 +1,5 @@
+flask
+google-cloud-storage
+google-generativeai
+chromadb
+pymupdf
