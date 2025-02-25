@@ -92,23 +92,33 @@ def generate_embeddings(text):
         return None
 
 def store_embeddings_in_chroma(file_name, text):
-    """Store embeddings in ChromaDB."""
+    """Store embeddings in ChromaDB and print stored vectors."""
     logger.info(f"🔍 Storing Embeddings for: {file_name}")
+
     embedding_vector = generate_embeddings(text)
     if embedding_vector is None:
         logger.error("Skipping storage due to embedding failure.")
         return
+    
+    logger.info(f"Embedding vectors:{embedding_vector}")  
 
     try:
         logger.debug(f"Embedding Vector Length: {len(embedding_vector)}")
+
+        # Store embedding in ChromaDB
         collection.add(
             ids=[file_name],
             embeddings=[embedding_vector],
             metadatas=[{"file_name": file_name, "content": text[:500]}]
         )
         logger.info(f"Successfully stored {file_name} in ChromaDB")
+
+        # Print the stored embedding vector
+        logger.info(f"\n📌 **Stored Embedding Vector for {file_name}:**")
+
     except Exception as e:
         logger.error(f"Error storing in ChromaDB: {e}")
+
 
 # Flask App
 app = Flask(__name__)
@@ -135,3 +145,4 @@ def process_file():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080)
+
