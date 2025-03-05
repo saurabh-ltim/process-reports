@@ -114,7 +114,7 @@ def store_embeddings_in_chroma(file_name, text):
         logger.info(f"Successfully stored {file_name} in ChromaDB")
 
         # Print the stored embedding vector
-        logger.info(f"\n📌 **Stored Embedding Vector for {file_name}:**")
+        logger.info(f"\n **Stored Embedding Vector for {file_name}:**")
 
     except Exception as e:
         logger.error(f"Error storing in ChromaDB: {e}")
@@ -126,7 +126,7 @@ app = Flask(__name__)
 @app.route("/process", methods=["POST"])
 def process_file():
     """Process PDF file from GCS, generate summary & store embeddings."""
-    logger.info("\n🚀 Processing File...")
+    logger.info("\n Processing File...")
     try:
         bucket = storage_client.bucket(BUCKET_NAME)
         blob = bucket.blob(FILE_NAME)
